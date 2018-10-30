@@ -8,16 +8,15 @@ import java.io.File;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Selenide.*;
 
 public class NewDocumentPage {
 
     private String pageUrl = "https://courier-test.esphere.ru/document/new";
 
     public void openNewDocPage(){
-        $(By.linkText("Новый документ")).click();
+        //$(By.linkText("Новый документ")).click();
+        open(pageUrl);
     }
 
     public void selectDocType(String documentType){
