@@ -3,18 +3,15 @@ package ui;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import constants.Drivers;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import java.io.File;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selectors.withText;
+import static com.codeborne.selenide.Selenide.$;
 
 @Listeners(UiScreenshots.class)
 public class UITest {
-
-    //private static final String LKK_URL = "https://courier-test.esphere.ru/";
 
     @BeforeTest
     public static void setDriver() {
@@ -25,24 +22,26 @@ public class UITest {
 
     @Test
     public void selenideUiAuthTest() {
-        //open(LKK_URL);
+
+        String userLogin = "test_lut";
+        String userPassword = "12345678";
+        String docType = "Договор";
+        String docNumber = "12345678";
+        String docReceiver = "КАРМЕЛЬ";
+        String pathToDocFile = "src/test/java/ui/UpFile.txt";
 
         LoginPage loginPage = new LoginPage();
-        loginPage.openLoginPage();
-        loginPage.login("test_lut", "12345678");
-        //loginPage.loginThis("test_lut", "12345678");
+        loginPage.openPage();
+        loginPage.login(userLogin, userPassword);
 
         NewDocumentPage newDocumentPage = new NewDocumentPage();
-        newDocumentPage.openNewDocPage();
-        newDocumentPage.selectDocType("Договор");
-        newDocumentPage.setDocNumber("12345678");
-        newDocumentPage.setDocReciever("КАРМЕЛЬ");
-        newDocumentPage.uploadDocument("src/test/java/ui/UpFile.txt");
+        newDocumentPage.openPage();
+        newDocumentPage.selectDocType(docType);
+        newDocumentPage.setDocNumber(docNumber);
+        newDocumentPage.setDocReciever(docReceiver);
+        newDocumentPage.uploadDocument(pathToDocFile);
 
-        //$(byText("Документ №12345678")).shouldBe(Condition.visible);
-        // $(By.cssSelector("data-bind='text: document.description'")).shouldHave(Condition.exactText("Документ №12345678"));
-        // shouldBe(Condition.visible);
-        sleep(1000);
+        $(withText(docType+ " №" + docNumber)).shouldBe(Condition.exist);
 
     }
 
